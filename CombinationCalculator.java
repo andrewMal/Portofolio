@@ -57,6 +57,7 @@ public class CombinationCalculator {
 			int[] lotteryComb=new int[6];
 			String num;
 			int counter=0;
+			int n=1;
 			while(in.hasNext()){
 				num=in.next();
 				if(num.equals("-1")) break;
@@ -65,19 +66,22 @@ public class CombinationCalculator {
 					if(lotteryComb[i]%2!=0) counter++;
 				}
 				if(counter<=maxEven) {
+					pw.print(n+". ");
 					for(int j=0;j<lotteryComb.length;j++) {
 						pw.print(lotteryComb[j]+" ");
 					}
 					pw.println();
 					counter=0;
+					n++;
 				}
 				else counter=0;
 			}
 			pw.print("-1");
+			in.close();
 			copyFile();
 			
-		}catch(Exception e) {
-			e.printStackTrace();
+		}catch(FileNotFoundException e) {
+			System.out.println("The file with groups of six not found !");
 		}
 	}
 	/**
@@ -90,6 +94,7 @@ public class CombinationCalculator {
 			int[] lotteryComb=new int[6];
 			String num;
 			int counter=0;
+			int n=1;
 			while(in.hasNext()){
 				num=in.next();
 				if(num.equals("-1")) break;
@@ -98,18 +103,21 @@ public class CombinationCalculator {
 					if(lotteryComb[i]%2==0) counter++;
 				}
 				if(counter<=maxOdd) {
+					pw.print(n+". ");
 					for(int j=0;j<lotteryComb.length;j++) {
 						pw.print(lotteryComb[j]+" ");
 					}
 					pw.println();
 					counter=0;
+					n++;
 				}
 				else counter=0;
 			}
 			pw.print("-1");
+			in.close();
 			copyFile();
-		}catch(Exception e) {
-			e.printStackTrace();
+		}catch(FileNotFoundException e) {
+			System.out.println("The file with groups of six not found !");
 		}
 	}
 	/**
@@ -121,6 +129,7 @@ public class CombinationCalculator {
 			int[] lotteryComb=new int[6];
 			String num;
 			int counter=0;
+			int n=1;
 			while(in.hasNext()){
 				num=in.next();
 				if(num.equals("-1")) break;
@@ -129,19 +138,21 @@ public class CombinationCalculator {
 					if(i>=1 && lotteryComb[i]-lotteryComb[i-1]==1) counter++;
 				}
 				if(counter<=maxNumRow) {
+					pw.print(n+". ");
 					for(int j=0;j<lotteryComb.length;j++) {
 						pw.print(lotteryComb[j]+" ");
 					}
 					pw.println();
 					counter=0;
+					n++;
 				}
 				else counter=0;
 			}
 			pw.print("-1");
 			in.close();
 			copyFile();
-		}catch(Exception e) {
-			e.printStackTrace();
+		}catch(FileNotFoundException e) {
+			System.out.println("The file with groups of six not found !");
 		}
 	}
 	/**
@@ -154,7 +165,7 @@ public class CombinationCalculator {
 			int[] decades=new int[10];
 			boolean higherToMax=false;//flag to check if numbers with same decade is more than value which allowed
 			String num;
-			//int counter=0;
+			int n=1;
 			while(in.hasNext()){
 				num=in.next();
 				if(num.equals("-1")) break;
@@ -171,18 +182,20 @@ public class CombinationCalculator {
 					decades[i]=0; //turn to zero the cells of array (counters)
 				}
 				if(!higherToMax) {
+					pw.print(n+". ");
 					for(int j=0;j<lotteryComb.length;j++) {
 						pw.print(lotteryComb[j]+" ");
 					}
 					pw.println();
-					//counter=0;
+					n++;
 				}
-				//else counter=0;
+				higherToMax=false;
 			}
 			pw.print("-1");
+			in.close();
 			copyFile();
-		}catch(Exception e) {
-			e.printStackTrace();
+		}catch(FileNotFoundException e) {
+			System.out.println("The file with groups of six not found !");
 		}
 	}
 	/**
@@ -195,7 +208,7 @@ public class CombinationCalculator {
 			int[] decades=new int[10];
 			boolean higherToMax=false;//flag to check if numbers with same decade is more than value which allowed
 			String num;
-			//int counter=0;
+			int n=1;
 			while(in.hasNext()){
 				num=in.next();
 				if(num.equals("-1")) break;
@@ -212,16 +225,20 @@ public class CombinationCalculator {
 					decades[i]=0; //turn to zero the cells of array (counters)
 				}
 				if(!higherToMax) {
+					pw.print(n+". ");
 					for(int j=0;j<lotteryComb.length;j++) {
 						pw.print(lotteryComb[j]+" ");
 					}
 					pw.println();
+					n++;
 				}
+				higherToMax=false;
 			}
 			pw.print("-1");
+			in.close();
 			copyFile();
-		}catch(Exception e) {
-			e.printStackTrace();
+		}catch(FileNotFoundException e) {
+			System.out.println("The file with groups of six not found !");
 		}
 	}
 	/**
@@ -240,8 +257,8 @@ public class CombinationCalculator {
 				}
 				System.out.println();
 			}
-		}catch(FileNotFoundException e1) {
-			e1.printStackTrace();
+		}catch(FileNotFoundException e) {
+			System.out.println("The file with groups of six not found !");
 		}
 	}
 	/**
@@ -253,7 +270,7 @@ public class CombinationCalculator {
 			 Path from = tempFile.toPath(); //convert from File to Path
 			 Path to = Paths.get(file.getPath()); //convert from String to Path
 			 Files.copy(from, to, StandardCopyOption.REPLACE_EXISTING);  
-			// Files.copy( tempFile.toPath(), file.toPath() );
+			
 		        
 		    }catch(IOException e3) {
 		    	e3.printStackTrace();
