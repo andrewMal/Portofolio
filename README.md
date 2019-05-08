@@ -1,2 +1,2 @@
 # Portofolio
-Some coding mini projects in java
+Mini projects in java
