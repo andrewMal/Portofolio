@@ -31,11 +31,15 @@ public class FileFrequencyDemo {
 				//***************
 			}
 			
-			System.out.println("Sort by chars");
+			
+			
+			System.out.println("---Sort by chars---");
 			myList.bubbleChars();
 			myList.traverse(totalChars);
 			
-			System.out.println("Sort by frequency");
+			System.out.println();
+			
+			System.out.println("---Sort by frequency---");
 			myList.bubbleFrequencies();
 			myList.traverse(totalChars);
 			

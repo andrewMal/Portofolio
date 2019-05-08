@@ -84,7 +84,8 @@ public class DoublyList {
 		for(ListNode i=head; i!=null; i=i.next) {
 			if(!(i.data==' ')) System.out.print(i.data+" ");
 			else System.out.print("space"+" ");
-			System.out.println((i.n/plentyChars)*100 +"%");
+			System.out.printf("%.2f",(i.n/plentyChars)*100 );
+			System.out.println(" %");
 		}
 	}
 	//************
@@ -114,8 +115,10 @@ public class DoublyList {
 		ListNode piv=null;
 		
 		for (ListNode i=head;i!=null;i=i.next) {
-			int max =Integer.MAX_VALUE;
+			int max =Integer.MIN_VALUE;
+			
 			for(j=i;j!=null;j=j.next) {
+				
 				if(j.n>max) {
 					max=j.n;
 					piv=j;
@@ -126,13 +129,18 @@ public class DoublyList {
 	}
 	
 	static void swap(ListNode i,ListNode j) {
-		char tmpChar=i.data;
-		int tmpNum=i.n;
+		try {
+			char tmpChar=i.data;
+			int tmpNum=i.n;
+			
+			i.data=j.data;
+			i.n=j.n;
+			j.data=tmpChar;
+			j.n=tmpNum;
+		}catch(NullPointerException e1) {
+			e1.printStackTrace();
+		}
 		
-		i.data=j.data;
-		i.n=j.n;
-		j.data=tmpChar;
-		j.n=tmpNum;
 	}
 	
 	private boolean isEmpty() {
