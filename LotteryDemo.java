@@ -77,7 +77,7 @@ public class LotteryDemo {
 		try {
 			System.out.println("Please give the max value of even number which you want for every group of six");
 			int maxEven=in.nextInt();
-			CombinationCalculator.checkForEven(maxEven);
+			CombinationCalculator.iterateCombinations(maxEven,1);
 			System.out.println("The filter applied successfully, you can check the groups of six in txt file or you can print in console");
 		}catch(InputMismatchException e5) {
 			in.nextLine();
@@ -94,7 +94,7 @@ public class LotteryDemo {
 		try {
 			System.out.println("Please give the max value of odd number which you want for every group of six");
 			int maxOdd=in.nextInt();
-			CombinationCalculator.checkForOdd(maxOdd);
+			CombinationCalculator.iterateCombinations(maxOdd,2);
 			System.out.println("The filter applied successfully, you can check the groups of six in txt file or you can print in console");
 		}catch(InputMismatchException e5) {
 			in.nextLine();
@@ -111,7 +111,7 @@ public class LotteryDemo {
 		try {
 			System.out.println("Please give the max numbers in a row which you want for every group of six");
 			int maxInRow=in.nextInt();
-			CombinationCalculator.checkForNumInRow(maxInRow);
+			CombinationCalculator.iterateCombinations(maxInRow,3);
 			System.out.println("The filter applied successfully, you can check the groups of six in txt file or you can print in console");
 		}catch(InputMismatchException e5) {
 			in.nextLine();
@@ -128,7 +128,7 @@ public class LotteryDemo {
 		try {
 			System.out.println("Please give the max numbers in a same decade which you want for every group of six");
 			int maxSameDecade=in.nextInt();
-			CombinationCalculator.filterForDecade(maxSameDecade);
+			CombinationCalculator.digitsFilters(maxSameDecade,1);
 			System.out.println("The filter applied successfully, you can check the groups of six in txt file or you can print in console");
 		}catch(InputMismatchException e5) {
 			in.nextLine();
@@ -144,7 +144,7 @@ public class LotteryDemo {
 		try{
 			System.out.println("Please give the max numbers with a same ending which you want for every group of six");
 			int maxSameEnding=in.nextInt();
-			CombinationCalculator.filterForEnding(maxSameEnding);
+			CombinationCalculator.digitsFilters(maxSameEnding,2);
 			System.out.println("The filter applied successfully, you can check the groups of six in txt file or you can print in console");
 		}catch(InputMismatchException e5) {
 			in.nextLine();

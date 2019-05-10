@@ -15,6 +15,10 @@ public class CombinationCalculator {
 	public static File file =new File("D://LotterySystem.txt");
 	public static File tempFile=new File("D://temp.txt");
 	
+	/**
+	 * @param arr its an array with input of the user
+	 * calculate all the possible combination(group of six) from the user input 
+	 */
 	public static void findAllCombination(int[] arr) {
 		try(PrintWriter pw=new PrintWriter(new FileOutputStream(file),true)){
 			int n=arr.length-1;
@@ -46,13 +50,8 @@ public class CombinationCalculator {
 			e.printStackTrace();
 		}
 	}
-	/**
-	 * filter for group of six with maximum 4 odd numbers 
-	 * @param file with group of six numbers
-	 * @param int i is maximum number of even which want to have in every group of six
-	 */
 	
-	public static void checkForEven(int maxEven) {
+	public static void iterateCombinations(int plenty,int option) {
 		try(Scanner in=new Scanner(file);PrintWriter pw=new PrintWriter(new FileOutputStream(tempFile),true)){
 			int[] lotteryComb=new int[6];
 			String num;
@@ -63,9 +62,17 @@ public class CombinationCalculator {
 				if(num.equals("-1")) break;
 				for(int i=0;i<lotteryComb.length;i++) {
 					lotteryComb[i]=in.nextInt();
-					if(lotteryComb[i]%2!=0) counter++;
+					if(option==1) {
+						if(lotteryComb[i]%2==0) counter++;//even filter
+					}
+					else if(option==2) {
+						if(lotteryComb[i]%2!=0) counter++;//odd filter
+					}
+					else{
+						if(i>=1 && lotteryComb[i]-lotteryComb[i-1]==1) counter++;//num in row filter
+					}
 				}
-				if(counter<=maxEven) {
+				if(counter<=plenty) {
 					pw.print(n+". ");
 					for(int j=0;j<lotteryComb.length;j++) {
 						pw.print(lotteryComb[j]+" ");
@@ -79,133 +86,173 @@ public class CombinationCalculator {
 			pw.print("-1");
 			in.close();
 			copyFile();
-			
+		
 		}catch(FileNotFoundException e) {
 			System.out.println("The file with groups of six not found !");
 		}
 	}
+	/**
+	 * filter for group of six with maximum 4 odd numbers 
+	 * @param file with group of six numbers
+	 * @param int maxEven is maximum number of even which want to have in every group of six
+	 */
+	
+//	public static void checkForEven(int maxEven) {
+//		try(Scanner in=new Scanner(file);PrintWriter pw=new PrintWriter(new FileOutputStream(tempFile),true)){
+//			int[] lotteryComb=new int[6];
+//			String num;
+//			int counter=0;
+//			int n=1;
+//			while(in.hasNext()){
+//				num=in.next();
+//				if(num.equals("-1")) break;
+//				for(int i=0;i<lotteryComb.length;i++) {
+//					lotteryComb[i]=in.nextInt();
+//					if(lotteryComb[i]%2==0) counter++;
+//				}
+//				if(counter<=maxEven) {
+//					pw.print(n+". ");
+//					for(int j=0;j<lotteryComb.length;j++) {
+//						pw.print(lotteryComb[j]+" ");
+//					}
+//					pw.println();
+//					counter=0;
+//					n++;
+//				}
+//				else counter=0;
+//			}
+//			pw.print("-1");
+//			in.close();
+//			copyFile();
+//			
+//		}catch(FileNotFoundException e) {
+//			System.out.println("The file with groups of six not found !");
+//		}
+//	}
+	
+	
 	/**
 	 * 
 	 * filter for group of six with maximum 4 odd numbers 
 	 * @param file with group of six numbers
 	 */
-	public static void checkForOdd(int maxOdd) {
-		try(Scanner in=new Scanner(file);PrintWriter pw=new PrintWriter(new FileOutputStream(tempFile),true)){
-			int[] lotteryComb=new int[6];
-			String num;
-			int counter=0;
-			int n=1;
-			while(in.hasNext()){
-				num=in.next();
-				if(num.equals("-1")) break;
-				for(int i=0;i<lotteryComb.length;i++) {
-					lotteryComb[i]=in.nextInt();
-					if(lotteryComb[i]%2==0) counter++;
-				}
-				if(counter<=maxOdd) {
-					pw.print(n+". ");
-					for(int j=0;j<lotteryComb.length;j++) {
-						pw.print(lotteryComb[j]+" ");
-					}
-					pw.println();
-					counter=0;
-					n++;
-				}
-				else counter=0;
-			}
-			pw.print("-1");
-			in.close();
-			copyFile();
-		}catch(FileNotFoundException e) {
-			System.out.println("The file with groups of six not found !");
-		}
-	}
-	/**
-	 * filter which catch if the group of six contains numbers in a row
-	 * @param file with group of six numbers
-	 */
-	public static void checkForNumInRow(int maxNumRow) {
-		try(Scanner in=new Scanner(file);PrintWriter pw=new PrintWriter(new FileOutputStream(tempFile),true)){
-			int[] lotteryComb=new int[6];
-			String num;
-			int counter=0;
-			int n=1;
-			while(in.hasNext()){
-				num=in.next();
-				if(num.equals("-1")) break;
-				for(int i=0;i<lotteryComb.length;i++) {
-					lotteryComb[i]=in.nextInt();
-					if(i>=1 && lotteryComb[i]-lotteryComb[i-1]==1) counter++;
-				}
-				if(counter<=maxNumRow) {
-					pw.print(n+". ");
-					for(int j=0;j<lotteryComb.length;j++) {
-						pw.print(lotteryComb[j]+" ");
-					}
-					pw.println();
-					counter=0;
-					n++;
-				}
-				else counter=0;
-			}
-			pw.print("-1");
-			in.close();
-			copyFile();
-		}catch(FileNotFoundException e) {
-			System.out.println("The file with groups of six not found !");
-		}
-	}
-	/**
-	 * filter for checking if every group of six have max (param) number with in same decade
-	 * @param maxSameDecade number for max value
-	 */
-	public static void filterForDecade(int maxSameDecade) {
-		try(Scanner in=new Scanner(file);PrintWriter pw=new PrintWriter(new FileOutputStream(tempFile),true)){
-			int[] lotteryComb=new int[6];
-			int[] decades=new int[10];
-			boolean higherToMax=false;//flag to check if numbers with same decade is more than value which allowed
-			String num;
-			int n=1;
-			while(in.hasNext()){
-				num=in.next();
-				if(num.equals("-1")) break;
-				for(int i=0;i<lotteryComb.length;i++) {
-					lotteryComb[i]=in.nextInt();
-				}
-				for(int i=0;i<lotteryComb.length;i++) {
-					decades[lotteryComb[i]/10]++;
-				}
-				for(int i=0;i<decades.length;i++) {
-					if(decades[i]>maxSameDecade) {
-						higherToMax=true;
-					}
-					decades[i]=0; //turn to zero the cells of array (counters)
-				}
-				if(!higherToMax) {
-					pw.print(n+". ");
-					for(int j=0;j<lotteryComb.length;j++) {
-						pw.print(lotteryComb[j]+" ");
-					}
-					pw.println();
-					n++;
-				}
-				higherToMax=false;
-			}
-			pw.print("-1");
-			in.close();
-			copyFile();
-		}catch(FileNotFoundException e) {
-			System.out.println("The file with groups of six not found !");
-		}
-	}
+//	public static void checkForOdd(int maxOdd) {
+//		try(Scanner in=new Scanner(file);PrintWriter pw=new PrintWriter(new FileOutputStream(tempFile),true)){
+//			int[] lotteryComb=new int[6];
+//			String num;
+//			int counter=0;
+//			int n=1;
+//			while(in.hasNext()){
+//				num=in.next();
+//				if(num.equals("-1")) break;
+//				for(int i=0;i<lotteryComb.length;i++) {
+//					lotteryComb[i]=in.nextInt();
+//					if(lotteryComb[i]%2!=0) counter++;
+//				}
+//				if(counter<=maxOdd) {
+//					pw.print(n+". ");
+//					for(int j=0;j<lotteryComb.length;j++) {
+//						pw.print(lotteryComb[j]+" ");
+//					}
+//					pw.println();
+//					counter=0;
+//					n++;
+//				}
+//				else counter=0;
+//			}
+//			pw.print("-1");
+//			in.close();
+//			copyFile();
+//		}catch(FileNotFoundException e) {
+//			System.out.println("The file with groups of six not found !");
+//		}
+//	}
+//	/**
+//	 * filter which catch if the group of six contains numbers in a row
+//	 * @param file with group of six numbers
+//	 */
+//	public static void checkForNumInRow(int maxNumRow) {
+//		try(Scanner in=new Scanner(file);PrintWriter pw=new PrintWriter(new FileOutputStream(tempFile),true)){
+//			int[] lotteryComb=new int[6];
+//			String num;
+//			int counter=0;
+//			int n=1;
+//			while(in.hasNext()){
+//				num=in.next();
+//				if(num.equals("-1")) break;
+//				for(int i=0;i<lotteryComb.length;i++) {
+//					lotteryComb[i]=in.nextInt();
+//					if(i>=1 && lotteryComb[i]-lotteryComb[i-1]==1) counter++;
+//				}
+//				if(counter<=maxNumRow) {
+//					pw.print(n+". ");
+//					for(int j=0;j<lotteryComb.length;j++) {
+//						pw.print(lotteryComb[j]+" ");
+//					}
+//					pw.println();
+//					counter=0;
+//					n++;
+//				}
+//				else counter=0;
+//			}
+//			pw.print("-1");
+//			in.close();
+//			copyFile();
+//		}catch(FileNotFoundException e) {
+//			System.out.println("The file with groups of six not found !");
+//		}
+//	}
+//	/**
+//	 * filter for checking if every group of six have max (param) number with in same decade
+//	 * @param maxSameDecade number for max value
+//	 */
+//	public static void filterForDecade(int maxSameDecade) {
+//		try(Scanner in=new Scanner(file);PrintWriter pw=new PrintWriter(new FileOutputStream(tempFile),true)){
+//			int[] lotteryComb=new int[6];
+//			int[] decades=new int[10];
+//			boolean higherToMax=false;//flag to check if numbers with same decade is more than value which allowed
+//			String num;
+//			int n=1;
+//			while(in.hasNext()){
+//				num=in.next();
+//				if(num.equals("-1")) break;
+//				for(int i=0;i<lotteryComb.length;i++) {
+//					lotteryComb[i]=in.nextInt();
+//				}
+//				for(int i=0;i<lotteryComb.length;i++) {
+//					decades[lotteryComb[i]/10]++;
+//				}
+//				for(int i=0;i<decades.length;i++) {
+//					if(decades[i]>maxSameDecade) {
+//						higherToMax=true;
+//					}
+//					decades[i]=0; //turn to zero the cells of array (counters)
+//				}
+//				if(!higherToMax) {
+//					pw.print(n+". ");
+//					for(int j=0;j<lotteryComb.length;j++) {
+//						pw.print(lotteryComb[j]+" ");
+//					}
+//					pw.println();
+//					n++;
+//				}
+//				higherToMax=false;
+//			}
+//			pw.print("-1");
+//			in.close();
+//			copyFile();
+//		}catch(FileNotFoundException e) {
+//			System.out.println("The file with groups of six not found !");
+//		}
+//	}
 	/**
 	 * filter for checking if every group of six have max (param) number with a same ending
-	 * @param maxSameEnding number for max value
+	 * @param plenty number for max value
 	 */
-	public static void filterForEnding(int maxSameEnding) {
+	public static void digitsFilters(int plenty,int option) {
 		try(Scanner in=new Scanner(file);PrintWriter pw=new PrintWriter(new FileOutputStream(tempFile),true)){
 			int[] lotteryComb=new int[6];
-			int[] decades=new int[10];
+			int[] digits=new int[10];
 			boolean higherToMax=false;//flag to check if numbers with same decade is more than value which allowed
 			String num;
 			int n=1;
@@ -216,13 +263,18 @@ public class CombinationCalculator {
 					lotteryComb[i]=in.nextInt();
 				}
 				for(int i=0;i<lotteryComb.length;i++) {
-					decades[lotteryComb[i]%10]++;
-				}
-				for(int i=0;i<decades.length;i++) {
-					if(decades[i]>maxSameEnding) {
-						higherToMax=true;
+					if(option==1) {
+						digits[lotteryComb[i]/10]++;
 					}
-					decades[i]=0; //turn to zero the cells of array (counters)
+					else {
+						digits[lotteryComb[i]%10]++;
+					}
+				}
+				for(int i=0;i<digits.length;i++) {
+					if(digits[i]>=plenty+1 && option==1) higherToMax=true;
+					else if (digits[i]>=plenty && option==2) higherToMax=true;
+					
+					digits[i]=0; //turn to zero the cells of array (counters)
 				}
 				if(!higherToMax) {
 					pw.print(n+". ");
@@ -257,6 +309,7 @@ public class CombinationCalculator {
 				}
 				System.out.println();
 			}
+			in.close();
 		}catch(FileNotFoundException e) {
 			System.out.println("The file with groups of six not found !");
 		}
@@ -264,7 +317,7 @@ public class CombinationCalculator {
 	/**
 	 * copy filtering tempfile to original file 
 	 */
-	private static void copyFile() {
+	private static void copyFile() throws FileNotFoundException{
 		 try{
 			 
 			 Path from = tempFile.toPath(); //convert from File to Path
